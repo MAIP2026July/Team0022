@@ -2,7 +2,7 @@ IdeaHub AI - Business, Economics & Scaling
 Product: IdeaHub AI
 Team: Team0022
 
-1. Business Value
+1. Business Value:
 IdeaHub AI is intended to improve how enterprise transformation teams discover, qualify and prioritise transformation opportunities.
 The product can create value by:
 • reducing manual effort required to structure incomplete transformation ideas;
@@ -16,7 +16,7 @@ The product can create value by:
 The expected value is not simply faster assessment.
 The larger product objective is to improve how limited transformation funding and delivery capacity are directed towards opportunities that have stronger evidence of value and feasibility.
 
-2. Customer and Buyer
+2. Customer and Buyer:
 The primary organisational customer for IdeaHub AI is an enterprise running a transformation, automation or Artificial Intelligence programme.
 Potential organisational buyers include:
 • Transformation Office;
@@ -27,7 +27,7 @@ Potential organisational buyers include:
 Primary users include Transformation Analysts, Automation or Artificial Intelligence Centre of Excellence analysts, Business Analysts and Solution Consultants.
 Transformation Leads and governance teams remain responsible for final prioritisation and investment decisions.
 
-3. Value Drivers
+3. Value Drivers:
 The main value drivers for IdeaHub AI are:
 Assessment Efficiency
 Reduce repeated manual effort involved in understanding, clarifying and structuring transformation ideas.
@@ -50,7 +50,7 @@ Help translate Process Mining observations into business opportunities that can 
 Decision Traceability
 Preserve the evidence, assumptions, Artificial Intelligence recommendation and human decision behind each opportunity assessment.
 
-4. Cost Drivers
+4. Cost Drivers:
 IdeaHub AI would introduce costs that need to be considered against the expected business value.
 Major cost drivers may include:
 Artificial Intelligence Usage
@@ -86,7 +86,7 @@ Ongoing costs may include:
 • product enhancements; and
 • user support.
 
-5. Build, Buy and API Economics
+5. Build, Buy and API Economics:
 We do not propose building every component of IdeaHub AI internally.
 Build
 The organisation should own the differentiated product logic, including:
@@ -104,7 +104,7 @@ Partner / Integrate
 Existing Process Mining, workflow and enterprise platforms can be integrated where appropriate rather than replicating their capabilities.
 The economic decision should therefore focus on owning the differentiated transformation decision capability while consuming commodity capabilities where practical.
 
-6. Commercial Model
+6. Commercial Model:
 A future commercial version of IdeaHub AI could use an enterprise subscription model.
 Possible commercial units may include:
 • enterprise subscription;
@@ -115,7 +115,7 @@ Possible commercial units may include:
 The appropriate pricing model should be validated against actual customer willingness to pay and the value created.
 At this stage, we do not assign a specific product price because sufficient market evidence has not yet been established.
 
-7. Unit Economics Considerations
+7. Unit Economics Considerations:
 The economics of an individual opportunity assessment should consider:
 Cost to Serve =
 Artificial Intelligence usage
@@ -131,7 +131,7 @@ An Artificial Intelligence-assisted assessment has economic value only if the ad
 • transformation investment quality.
 A more advanced Artificial Intelligence model should therefore not automatically be preferred if a smaller model, deterministic rule or non-AI method can produce sufficient product value.
 
-8. Scaling Considerations
+8. Scaling Considerations:
 Scaling IdeaHub AI involves more than increasing technical capacity.
 The product must continue delivering its core promise as the number and variety of opportunities increase.
 User Scale
@@ -165,7 +165,7 @@ Process Mining Scale
 Different Process Mining platforms may produce findings in different formats.
 IdeaHub AI should therefore focus on a common business representation of the process finding rather than becoming dependent on one Process Mining vendor.
 
-9. Scaling Risks
+9. Scaling Risks:
 Important scaling risks include:
 Cost Growth
 Artificial Intelligence usage cost may grow with the volume and complexity of assessments.
@@ -180,7 +180,7 @@ If every decision requires extensive manual review, human effort may become a sc
 Over-Customisation
 Excessive customer- or industry-specific customisation may weaken the reusable core product.
 
-10. Scaling Approach
+10. Scaling Approach:
 IdeaHub AI should scale progressively.
 First
 Validate individual opportunity qualification.
@@ -196,7 +196,7 @@ Introduce:
 • controlled learning from previous assessments.
 Scaling decisions should follow evidence of product value rather than the availability of additional Artificial Intelligence capabilities.
 
-11. Economic Principle
+11. Economic Principle:
 The core economic principle for IdeaHub AI is:
 Use Artificial Intelligence only where its incremental value in interpretation, assessment or decision support exceeds its additional cost and governance burden.
 
