@@ -200,5 +200,255 @@ Scaling decisions should follow evidence of product value rather than the availa
 The core economic principle for IdeaHub AI is:
 Use Artificial Intelligence only where its incremental value in interpretation, assessment or decision support exceeds its additional cost and governance burden.
 
+12. Illustrative Unit Economics
+The unit economics for IdeaHub AI should compare the cost of qualifying a transformation opportunity using the current manual approach with the cost of an AI-assisted assessment.
+At this stage, we do not have validated customer cost data. The following model is therefore intended to demonstrate how the economics of IdeaHub AI can be evaluated rather than claim actual customer savings.
+12.1 Unit of Analysis
+The primary unit for the initial economic assessment is:
+One transformation opportunity taken from initial submission to a review-ready qualification assessment.
+
+This allows the organisation to compare the current cost of qualification with the future cost of an IdeaHub AI-assisted qualification.
+
+12.2 Current Manual Assessment Cost
+The current manual process may involve:
+• understanding the submitted idea;
+• requesting missing information;
+• reviewing the business process;
+• assessing value and feasibility;
+• identifying risks;
+• determining the appropriate intervention;
+• preparing the recommendation; and
+• conducting human review.
+The cost per manually qualified opportunity can therefore be represented as:
+Manual Qualification Cost per Opportunity
+= Analyst Effort Cost
+• Clarification Effort Cost
+• Specialist Input Cost
+• Reviewer Effort Cost
+
+12.3 IdeaHub AI-Assisted Assessment Cost
+With IdeaHub AI, some activities are accelerated but human review is retained.
+The cost per AI-assisted qualified opportunity can be represented as:
+IdeaHub AI Qualification Cost per Opportunity
+= Reduced Analyst Effort Cost
+• AI / Large Language Model Usage Cost
+• Platform Cost Allocation
+• Human Review Cost
+• Governance and Support Cost Allocation
+The intention is not to eliminate human effort.
+The economic hypothesis is that Artificial Intelligence can reduce effort spent on interpretation, information-gap identification, clarification preparation and initial recommendation drafting while preserving human judgement for material decisions.
+
+12.4 Illustrative Economics Example
+The following example uses synthetic assumptions only to demonstrate the economic model.
+Economic Input	Manual Assessment	IdeaHub AI-Assisted Assessment
+Analyst effort per opportunity	4.0 hours	1.5 hours
+Reviewer effort per opportunity	1.0 hour	0.75 hour
+Illustrative blended human cost	USD 50/hour	USD 50/hour
+AI / platform variable cost	USD 0	USD 10/opportunity
+Illustrative cost per assessment	USD 250	USD 122.50
+
+Illustrative manual cost
+= (4.0 + 1.0) × USD 50
+ = USD 250 per opportunity
+Illustrative IdeaHub AI-assisted cost
+= (1.5 + 0.75) × USD 50 + USD 10
+ = USD 122.50 per opportunity
+Illustrative difference
+= USD 250 − USD 122.50
+ = USD 127.50 per opportunity
+This example is not presented as a validated saving.
+The values are synthetic assumptions used to demonstrate how IdeaHub AI's unit economics can be assessed.
+
+12.5 Break-Even Logic
+If IdeaHub AI requires a fixed implementation or annual operating investment, the break-even point can be evaluated as:
+Break-Even Number of Opportunities
+= Fixed Product Cost
+ ÷ Economic Benefit per Qualified Opportunity
+For example, if a future implementation required an illustrative fixed investment of USD 50,000 and the validated benefit were USD 127.50 per opportunity:
+Break-Even
+= USD 50,000 ÷ USD 127.50
+ ≈ 393 opportunities
+Again, these values are illustrative only.
+The actual decision should use validated:
+• analyst effort;
+• reviewer effort;
+• model cost;
+• platform cost;
+• implementation cost; and
+• opportunity volumes.
+
+12.6 Economic Value Beyond Direct Labour Saving
+IdeaHub AI may create additional value beyond effort reduction.
+Potential value areas include:
+• shorter qualification cycle;
+• earlier rejection of weak opportunities;
+• improved consistency of assessments;
+• reduced effort spent evaluating inappropriate technology choices;
+• better identification of high-value opportunities;
+• stronger decision traceability; and
+• better allocation of transformation funding and capacity.
+These benefits may be strategically important but should not be converted into financial claims without supporting evidence.
+
+12.7 Unit Economics Decision Principle
+The economic case for IdeaHub AI should be validated using:
+Cost per review-ready qualified opportunity
+
+rather than AI usage volume.
+A more advanced or expensive model should only be selected where the incremental improvement in assessment quality justifies the additional cost.
+
+13. Competitive and Alternative Analysis
+IdeaHub AI competes not only with other Artificial Intelligence products but also with the existing methods organisations use to discover, assess and prioritise transformation opportunities.
+We therefore compare IdeaHub AI against four alternative approaches.
+
+13.1 Manual Assessment Using Spreadsheets and Templates
+Organisations may use:
+• spreadsheets;
+• standard forms;
+• workshops;
+• email;
+• assessment templates; and
+• reviewer judgement.
+Strengths
+• low technology cost;
+• familiar to users;
+• easy to customise;
+• transparent calculations; and
+• limited Artificial Intelligence risk.
+Limitations
+• significant manual interpretation;
+• repeated clarification;
+• inconsistent treatment of unstructured submissions;
+• dependence on reviewer experience;
+• limited traceability across assessments; and
+• difficulty comparing large numbers of opportunities consistently.
+IdeaHub AI Position
+IdeaHub AI retains structured assessment and human review while using Artificial Intelligence to interpret opportunity narratives, identify missing information and support intervention recommendations.
+
+13.2 Rules-Based Digital Opportunity Assessment
+An organisation could build a structured form and deterministic scoring model without Artificial Intelligence.
+Strengths
+• predictable;
+• explainable;
+• relatively low operating cost;
+• easy to audit; and
+• appropriate when opportunity information is highly structured.
+Limitations
+• depends on users completing structured fields correctly;
+• limited ability to interpret varied business language;
+• limited handling of incomplete submissions;
+• cannot easily create context-specific clarification questions; and
+• may force diverse transformation problems into rigid categories.
+IdeaHub AI Position
+IdeaHub AI should use deterministic rules where rules are sufficient.
+Artificial Intelligence is added primarily for interpretation, gap identification, contextual clarification and recommendation support.
+If a rules-only approach produces comparable value, the Artificial Intelligence component should be reconsidered.
+
+13.3 Generic Generative AI Assistant
+A transformation analyst could use a general-purpose Generative Artificial Intelligence tool to analyse an opportunity.
+Strengths
+• strong language interpretation;
+• rapid summarisation;
+• flexible questioning;
+• low initial setup; and
+• broad general knowledge.
+Limitations
+A generic assistant does not inherently provide:
+• a governed opportunity-assessment workflow;
+• a standard value and feasibility framework;
+• a defined transformation intervention taxonomy;
+• deterministic scoring controls;
+• explicit Human-in-the-Loop decision rights;
+• assessment history;
+• enterprise backlog integration; or
+• consistent governance across opportunities.
+IdeaHub AI Position
+IdeaHub AI uses language-model capability inside a product-specific transformation workflow.
+Its proposed differentiation is therefore not the foundation model itself.
+The differentiation lies in:
+• transformation opportunity qualification;
+• assessment framework;
+• intervention selection;
+• evidence handling;
+• human governance; and
+• decision traceability.
+
+13.4 Process Mining Platforms
+Process Mining platforms can identify and analyse how existing processes actually execute.
+They may help identify:
+• bottlenecks;
+• rework;
+• delays;
+• process variation;
+• conformance issues; and
+• improvement areas.
+Strengths
+• evidence from real process behaviour;
+• objective visibility of process variants;
+• strong process discovery capability; and
+• ability to identify operational inefficiencies.
+Limitation Relative to the IdeaHub AI Product Thesis
+A Process Mining finding still requires business evaluation.
+For example:
+A repeated approval loop exists.
+
+The organisation still needs to decide:
+• whether the issue is material;
+• what the root cause is;
+• whether intervention is justified;
+• whether the answer is process redesign, rules, automation or Artificial Intelligence;
+• what risks exist; and
+• whether the opportunity deserves investment.
+IdeaHub AI Position
+IdeaHub AI is not intended to replace Process Mining.
+Process Mining provides a discovery signal.
+IdeaHub AI focuses on:
+Discovery Signal → Opportunity Qualification → Intervention Recommendation → Human-Governed Decision
+
+The two capabilities are therefore complementary.
+
+14. Competitive Positioning Summary
+Capability	Manual / Spreadsheet	Rules-Based Assessment	Generic Generative AI	Process Mining Platform	IdeaHub AI
+Structured opportunity intake	Yes	Yes	Limited	No	Yes
+Interpret unstructured idea	Manual	Limited	Yes	No	Yes
+Identify information gaps	Manual	Predefined only	Yes	No	Yes
+Generate contextual clarification	Manual	Limited	Yes	No	Yes
+Value / feasibility framework	Manual	Yes	Not standard	Limited	Yes
+Process discovery	No	No	Limited	Strong	Consume findings
+Intervention recommendation	Manual	Predefined	Possible but generic	Limited	Core capability
+Compare non-AI vs AI intervention	Manual	Limited	Possible	No	Core capability
+Deterministic governance controls	Manual	Yes	Limited	Product-dependent	Yes
+Human review / override	Yes	Yes	User-dependent	Product-dependent	Designed into workflow
+Explainable assessment rationale	Manual	Limited	Yes	Process-focused	Yes
+Decision traceability	Manual	Yes	Limited	Yes	Yes
+
+15. Proposed Competitive Differentiation
+The proposed competitive position of IdeaHub AI is:
+IdeaHub AI connects enterprise transformation opportunity discovery with governed investment decision support.
+
+The product does not attempt to replace:
+• Process Mining platforms;
+• workflow platforms;
+• automation platforms; or
+• foundation Artificial Intelligence models.
+Instead, it acts as a decision layer that helps organisations determine:
+What problem is worth solving, what intervention is appropriate, and whether the opportunity deserves further investment.
+
+Its differentiating capabilities are:
+1. support for both business-submitted ideas and Process Mining findings;
+2. Artificial Intelligence-assisted interpretation of unstructured opportunities;
+3. explicit identification of missing information;
+4. combined value, feasibility, risk and evidence assessment;
+5. comparison of process redesign, automation and multiple Artificial Intelligence approaches;
+6. preference for the least complex appropriate intervention;
+7. transparent recommendation rationale; and
+8. Human-in-the-Loop governance before the opportunity progresses.
+
+16. Competitive Positioning Principle
+IdeaHub AI should not attempt to win by providing the most sophisticated Artificial Intelligence.
+It should aim to win by helping enterprise transformation teams make:
+better, more consistent and more explainable transformation investment decisions.
+
+The product remains valuable only if this decision-support capability provides sufficient incremental value over spreadsheets, deterministic assessment tools, generic Generative Artificial Intelligence and existing Process Mining approaches.
+
 The economic objective is therefore not to maximise Artificial Intelligence usage.
 It is to improve transformation decision-making at a sustainable cost.
