@@ -1,1 +1,214 @@
+@startuml
 
+title IdeaHub AI - Initial TO-BE Transformation Opportunity Workflow
+
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam defaultFontName Arial
+
+skinparam activity {
+ BackgroundColor #F5F8FB
+ BorderColor #103B66
+ FontColor #172A3A
+ DiamondBackgroundColor #FFF4D6
+ DiamondBorderColor #B97818
+}
+
+skinparam ArrowColor #637487
+skinparam note {
+ BackgroundColor #EEF6FB
+ BorderColor #246A9F
+}
+
+|Business Stakeholder / Process Owner|
+
+start
+
+if (Existing business idea?) then (Yes)
+
+ :Identify business problem\nor transformation idea;
+
+ :Submit available process,\npain-point and outcome information;
+
+else (No)
+
+ |Process Mining / Process Analyst|
+
+ :Analyse existing process;
+
+ :Identify process signal;
+
+ note right
+ Examples:
+ - Bottleneck
+ - Rework
+ - Waiting time
+ - Exception
+ - Manual hand-off
+ - Process deviation
+ end note
+
+ :Submit Process Mining finding\nand supporting evidence;
+
+endif
+
+|IdeaHub AI|
+
+:Interpret unstructured\nopportunity information;
+
+:Structure initial opportunity;
+
+note right
+Identify:
+- Process
+- Stakeholder
+- Problem
+- Pain point
+- Frequency / volume
+- Expected outcome
+- Supporting evidence
+end note
+
+|Transformation Analyst / CoE|
+
+:Review AI interpretation;
+
+if (Interpretation correct?) then (Yes)
+
+else (No)
+
+ :Correct interpretation;
+
+endif
+
+|IdeaHub AI|
+
+:Identify missing or\nunclear information;
+
+if (Material information missing?) then (Yes)
+
+ :Generate contextual\nclarification questions;
+
+ |Transformation Analyst / CoE|
+
+ if (Analyst can answer?) then (Yes)
+
+ :Provide clarification\nor supporting evidence;
+
+ else (No)
+
+ |Business Stakeholder / Process Owner|
+
+ :Provide additional business\nor process information;
+
+ |Transformation Analyst / CoE|
+
+ :Review additional input;
+
+ endif
+
+ |IdeaHub AI|
+
+ :Update opportunity information;
+
+else (No)
+
+endif
+
+:Assess Business Value;
+
+:Assess Feasibility;
+
+:Identify Risk;
+
+:Assess Evidence Strength;
+
+:Compare intervention options;
+
+note right
+Possible interventions:
+
+- No intervention
+- Further assessment
+- Process redesign
+- Policy / procedure
+- Business rules
+- Workflow automation
+- RPA
+- Predictive ML
+- Generative AI
+- Agentic AI
+- Hybrid
+end note
+
+:Generate recommended\nintervention;
+
+:Generate rationale,\nassumptions and risks;
+
+|Transformation Analyst / CoE|
+
+:Review assessment\nand recommendation;
+
+if (Analyst agrees?) then (Yes)
+
+ :Submit recommendation;
+
+else (No)
+
+ :Modify assessment or\nintervention;
+
+ :Record rationale;
+
+endif
+
+|Transformation Lead / Governance|
+
+:Review opportunity,\nevidence and recommendation;
+
+if (More information required?) then (Yes)
+
+ :Request clarification;
+
+ |Transformation Analyst / CoE|
+
+ :Collect / update information;
+
+ |IdeaHub AI|
+
+ :Refresh assessment;
+
+ |Transformation Lead / Governance|
+
+ :Review updated recommendation;
+
+else (No)
+
+endif
+
+if (Approve progression?) then (Yes)
+
+ :Assign final outcome;
+
+ note right
+ Possible outcomes:
+ - Explore
+ - Prototype
+ - Pilot
+ - Candidate for Prioritisation
+ end note
+
+else (No)
+
+ :Reject or Refine;
+
+endif
+
+:Record human decision\nand rationale;
+
+|IdeaHub AI|
+
+:Preserve decision traceability\nand reviewer feedback;
+
+stop
+
+@enduml
