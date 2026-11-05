@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IdeaHub AI – Product Demonstrator</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💡%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#e9eef5; --surface:#ffffff; --surface2:#f5f8fc; --border:#d6deea;
+  --text:#14253f; --muted:#5a6b83; --sample:#8a94a6;
+  --navy:#0a2145; --navy2:#12386a; --side:#0e2850; --side-text:#c9dbf2; --side-on:#1b4a86;
+  --accent:#1b9a5a; --accent-d:#13783f; --accent-soft:#dff4e8; --accent-ink:#0d6b3b;
+  --blue:#2866d6; --blue-soft:#e4edff; --blue-ink:#1b4aa3;
+  --red:#cf3a3a; --red-soft:#fde8e8; --red-ink:#9d2020;
+  --amber-soft:#fcefcb; --amber-ink:#7f5300;
+  --shadow:0 1px 2px rgba(10,33,69,.06);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1322; --surface:#121d33; --surface2:#17243d; --border:#26364f;
+    --text:#e4ecf8; --muted:#97a8c2; --sample:#7f8ca3;
+    --navy:#071731; --navy2:#12386a; --side:#0a1d3b; --side-text:#b9cde8; --side-on:#17437a;
+    --accent:#2bb673; --accent-d:#1f9a5e; --accent-soft:#12372a; --accent-ink:#7fe0b0;
+    --blue:#5d95f2; --blue-soft:#162a52; --blue-ink:#a9c6fa;
+    --red:#ee6a6a; --red-soft:#3a1a1f; --red-ink:#f6a3a3;
+    --amber-soft:#3a2f12; --amber-ink:#f0cd85;
+    --shadow:none; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1322; --surface:#121d33; --surface2:#17243d; --border:#26364f;
+  --text:#e4ecf8; --muted:#97a8c2; --sample:#7f8ca3;
+  --navy:#071731; --navy2:#12386a; --side:#0a1d3b; --side-text:#b9cde8; --side-on:#17437a;
+  --accent:#2bb673; --accent-d:#1f9a5e; --accent-soft:#12372a; --accent-ink:#7fe0b0;
+  --blue:#5d95f2; --blue-soft:#162a52; --blue-ink:#a9c6fa;
+  --red:#ee6a6a; --red-soft:#3a1a1f; --red-ink:#f6a3a3;
+  --amber-soft:#3a2f12; --amber-ink:#f0cd85;
+  --shadow:none; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4,p{margin:0}
+.ico{flex:none;vertical-align:middle}
+
+/* Top banner */
+.top{background:linear-gradient(100deg,var(--navy) 0%,var(--navy2) 62%,#0f5a47 100%);color:#fff;display:flex;align-items:center;gap:22px;padding:14px 22px;flex-wrap:wrap}
+.logo{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1}
+.logo b{color:#34d58b}
+.tag-main{border-left:1px solid rgba(255,255,255,.28);padding-left:20px}
+.tag-main strong{display:block;font-size:17px;font-weight:600}
+.tag-main span{font-size:13px;opacity:.85}
+.tag-right{margin-left:auto;background:rgba(27,154,90,.92);padding:10px 18px;border-radius:6px;font-weight:600;max-width:300px;line-height:1.3}
+
+/* Shell */
+.shell{display:grid;grid-template-columns:220px minmax(0,1fr);max-width:1320px;margin:0 auto;min-height:calc(100vh - 80px)}
+.side{background:var(--side);color:var(--side-text);padding:18px 12px;display:flex;flex-direction:column;gap:4px}
+.side .brand{font-weight:800;font-size:17px;color:#fff;padding:2px 10px 14px}
+.side .brand b{color:#34d58b}
+.nav{display:flex;align-items:center;gap:10px;background:none;border:0;color:inherit;text-align:left;padding:9px 10px;border-radius:6px;cursor:pointer;font-weight:500}
+.nav:hover{background:rgba(255,255,255,.07)}
+.nav.on{background:var(--side-on);color:#fff}
+.nav .soon{margin-left:auto;font-size:10px;opacity:.7;border:1px solid rgba(255,255,255,.35);border-radius:10px;padding:0 6px}
+.main{padding:20px 24px 28px;min-width:0}
+
+/* Demo bar */
+.demo{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:16px;box-shadow:var(--shadow)}
+.demo label{display:flex;align-items:center;gap:8px;font-weight:600}
+.demo select{border:1px solid var(--border);background:var(--surface2);border-radius:6px;padding:6px 10px;min-width:240px}
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:3px 10px;border-radius:12px;background:var(--blue-soft);color:var(--blue-ink)}
+.pill.syn{background:var(--amber-soft);color:var(--amber-ink)}
+.legend{margin-left:auto;font-size:12px;color:var(--muted)}
+.legend i{font-style:normal;color:var(--sample);font-weight:600}
+
+/* Stepper */
+.stepper{display:flex;margin:4px 0 16px}
+.st{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;font-size:12px;color:var(--muted);background:none;border:0;padding:0;cursor:default}
+.st:not(:last-child)::after{content:"";position:absolute;top:13px;left:calc(50% + 16px);right:calc(-50% + 16px);height:2px;background:var(--border)}
+.st.done:not(:last-child)::after{background:var(--accent)}
+.st .dot{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:2px solid var(--border);font-weight:700;font-size:12px;z-index:1}
+.st.done{cursor:pointer;color:var(--text)}
+.st.done .dot{background:var(--accent);border-color:var(--accent);color:#fff}
+.st.on .dot{background:var(--navy2);border-color:var(--navy2);color:#fff}
+.st.on{color:var(--text);font-weight:700}
+
+/* Panel */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 22px;box-shadow:var(--shadow)}
+.ph{display:flex;gap:14px;align-items:center;margin-bottom:16px}
+.num{width:38px;height:38px;border-radius:50%;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:700;font-size:18px;flex:none}
+.ph h2{font-size:22px;font-weight:700;letter-spacing:-.2px}
+.ph p{color:var(--muted)}
+.lead{font-weight:600;margin:0 0 12px}
+.muted{color:var(--muted)} .small{font-size:12px}
+.note-i{display:flex;gap:8px;align-items:flex-start;background:var(--blue-soft);color:var(--blue-ink);padding:8px 12px;border-radius:6px;margin:0 0 14px;font-size:13px}
+
+/* Forms */
+.tabs{display:flex;gap:2px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.tab{background:none;border:0;padding:9px 18px;cursor:pointer;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-1px}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue);background:var(--blue-soft);border-radius:6px 6px 0 0}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+.fld{display:flex;flex-direction:column;gap:5px;grid-column:1/-1}
+.fld.half{grid-column:auto}
+.lbl{font-weight:600;font-size:13px}
+.req{color:var(--red)}
+.inp{width:100%;border:1px solid var(--border);background:var(--surface);border-radius:6px;padding:8px 10px;resize:vertical}
+.inp:focus,.btn:focus-visible,.nav:focus-visible,.tab:focus-visible,.lnk:focus-visible,.tile:focus-visible,.key:focus-visible,.st:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.inp.sample{color:var(--sample)}
+.inp:disabled{background:var(--surface2);opacity:.7}
+.drop{margin-top:14px;border:1.5px dashed var(--border);border-radius:8px;padding:16px;text-align:center;color:var(--muted);cursor:pointer;background:var(--surface2)}
+.drop.over{border-color:var(--blue);background:var(--blue-soft)}
+.files{list-style:none;margin:8px 0 0;padding:0;font-size:12px;color:var(--muted)}
+.msg{min-height:20px;margin-top:10px;color:var(--red-ink);font-weight:600}
+.foot{display:flex;justify-content:space-between;gap:10px;margin-top:14px;flex-wrap:wrap}
+.btn{border:1px solid var(--border);background:var(--surface);border-radius:6px;padding:9px 18px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.btn:hover{background:var(--surface2)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.pri:hover{background:var(--accent-d)}
+.btn.sm{padding:5px 12px;font-size:13px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.lnk{background:none;border:0;color:var(--blue);cursor:pointer;display:inline-flex;gap:5px;align-items:center;font-weight:600;font-size:13px;padding:4px}
+
+/* Interpretation */
+.irow{display:grid;grid-template-columns:200px 1fr auto;gap:10px 16px;align-items:start;padding:11px 0;border-bottom:1px solid var(--border)}
+.irow:last-of-type{border-bottom:0}
+.ilab{font-weight:600;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.val .small{margin-top:3px}
+.edit{grid-column:2/4}
+.row-actions{display:flex;gap:8px;margin-top:8px}
+.irow .edit{grid-column:2/-1}
+.tag{font-size:11px;font-weight:600;padding:1px 8px;border-radius:10px;margin-left:6px;white-space:nowrap}
+.ilab .tag{margin-left:0}
+.t-P{background:var(--accent-soft);color:var(--accent-ink)}
+.t-I{background:var(--blue-soft);color:var(--blue-ink)}
+.t-U{background:var(--amber-soft);color:var(--amber-ink)}
+.t-E{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.tagkey{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted);margin:2px 0 10px}
+.tagkey .tag{margin:0}
+.terms{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.term{border:1px solid var(--border);background:var(--surface2);border-radius:14px;padding:3px 12px;cursor:pointer;font-size:13px}
+.term.on{background:var(--blue-soft);border-color:var(--blue);color:var(--blue-ink);font-weight:600}
+.addterm{display:flex;gap:8px;max-width:360px}
+
+/* Clarification */
+.q{border:1px solid var(--border);border-radius:8px;padding:14px;margin-bottom:12px;background:var(--surface2)}
+.qh{display:flex;gap:10px;align-items:center;margin-bottom:8px}
+.qn{width:24px;height:24px;border-radius:50%;background:var(--navy2);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;flex:none}
+.checks{display:flex;gap:20px;flex-wrap:wrap;margin-top:8px;font-size:13px}
+.ck{display:flex;gap:6px;align-items:center;cursor:pointer}
+
+/* Assessment */
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.dcard{border:1px solid var(--border);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:8px;background:var(--surface)}
+.dcard header{display:flex;align-items:center;gap:10px}
+.dcard h4{font-size:15px}
+.dic{color:var(--navy2);display:grid;place-items:center}
+.dcard header .chip{margin-left:auto}
+.chip{font-weight:700;font-size:13px;padding:2px 12px;border-radius:5px}
+.chip.good{background:var(--accent-soft);color:var(--accent-ink)}
+.chip.mid{background:var(--amber-soft);color:var(--amber-ink)}
+.chip.bad{background:var(--red-soft);color:var(--red-ink)}
+.bul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+.flip{font-size:13px;background:var(--surface2);padding:8px 10px;border-radius:6px}
+.key{margin-top:auto;display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--surface2);border:0;border-top:1px solid var(--border);border-radius:0 0 6px 6px;padding:8px 10px;cursor:pointer;text-align:left;margin-left:-14px;margin-right:-14px;margin-bottom:-14px;width:calc(100% + 28px)}
+.ledger{list-style:none;margin:0;padding:0;font-size:13px;display:flex;flex-direction:column;gap:4px}
+.ledger li{display:flex;gap:8px;justify-content:space-between}
+
+/* Recommendation */
+.ladder{list-style:none;display:flex;gap:4px;padding:0;margin:0 0 14px;overflow-x:auto}
+.ladder li{flex:1;min-width:92px;text-align:center;font-size:12px;padding:6px 4px;border-radius:5px;background:var(--surface2);border:1px solid var(--border);color:var(--muted)}
+.ladder li.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.banner{display:flex;gap:14px;align-items:center;background:var(--accent-soft);border:1px solid var(--accent);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+.banner h3{font-size:19px;color:var(--accent-ink)}
+.banner .ico{color:var(--accent)}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.box{border:1px solid var(--border);border-radius:8px;padding:12px 14px;background:var(--surface)}
+.box.warn{background:var(--amber-soft);border-color:transparent}
+.box h4{margin-bottom:6px;font-size:14px}
+.box ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px}
+details.opt{border-top:1px solid var(--border);padding:6px 0}
+details.opt:first-of-type{border-top:0}
+details.opt summary{cursor:pointer}
+details.opt p{margin:6px 0 2px 16px;color:var(--muted);font-size:13px}
+.kv2{display:flex;gap:10px;align-items:flex-start}
+.kv2 .ico{margin-top:2px}
+
+/* Review */
+.sumcard{border:1px solid var(--border);border-radius:8px;padding:14px;background:var(--surface2);margin-bottom:14px}
+.chips4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.chips4 div{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 14px}
+.tile{border:1.5px solid var(--border);border-radius:8px;background:var(--surface);padding:12px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:3px}
+.tile b{display:flex;gap:6px;align-items:center}
+.tile span{font-size:12px;color:var(--muted)}
+.tile.accept.on{border-color:var(--accent);background:var(--accent-soft)}
+.tile.modify.on{border-color:var(--blue);background:var(--blue-soft)}
+.tile.request.on{border-color:var(--blue);background:var(--blue-soft)}
+.tile.reject.on{border-color:var(--red);background:var(--red-soft)}
+.tile.on{box-shadow:0 0 0 1px currentColor inset}
+.modp{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:14px;background:var(--surface2)}
+.gates{list-style:none;margin:6px 0 14px;padding:0;display:flex;flex-direction:column;gap:6px;font-size:13px}
+.gates li{display:flex;gap:8px;align-items:flex-start}
+.g-ok{color:var(--accent)} .g-flag{color:var(--red)} .g-info{color:var(--blue)}
+.hint{font-size:12px;color:var(--muted);margin-top:6px;text-align:right}
+
+/* Record */
+.kvt{width:100%;border-collapse:collapse;margin:6px 0 16px;font-size:13px}
+.kvt th,.kvt td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+.kvt th{width:210px;color:var(--muted);font-weight:600}
+.kvt.three th{width:auto;background:var(--surface2)}
+.rec-h{font-size:15px;margin:14px 0 4px}
+.trail{margin:4px 0 14px;padding-left:18px;font-size:13px;display:flex;flex-direction:column;gap:3px}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+.tbl-click tr{cursor:pointer}
+.tbl-click tbody tr:hover{background:var(--surface2)}
+.disc{font-size:12px;color:var(--muted);margin-top:14px;border-top:1px solid var(--border);padding-top:10px}
+.footnote{margin-top:14px;font-size:12px;color:var(--muted);text-align:center}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(16px + env(safe-area-inset-bottom,0px));background:var(--navy);color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;z-index:20;box-shadow:0 4px 14px rgba(0,0,0,.3);max-width:90vw}
+.toast[hidden]{display:none}
+
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{flex-direction:row;overflow-x:auto;padding:8px;gap:2px}
+  .side .brand{display:none}
+  .nav{white-space:nowrap}
+  .nav .soon{display:none}
+  .main{padding:14px}
+  .tag-main,.tag-right{display:none}
+  .fgrid,.dgrid,.twocol,.modp{grid-template-columns:1fr}
+  .fld.half{grid-column:1/-1}
+  .tiles,.chips4{grid-template-columns:1fr 1fr}
+  .irow{grid-template-columns:1fr}
+  .irow .edit{grid-column:1}
+  .legend{margin-left:0}
+  .demo select{min-width:0;width:100%}
+  .demo label{width:100%;flex-wrap:wrap}
+}
+@media (max-width:520px){
+  .st span.l{display:none}
+  .st.on span.l{display:block;position:absolute;top:30px;white-space:nowrap}
+  .stepper{margin-bottom:28px}
+  .panel{padding:14px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo">IdeaHub <b>AI</b></div>
+  <div class="tag-main"><strong>From Ideas and Process Insights to Impact</strong><span>Discover. Qualify. Prioritize. Transform.</span></div>
+  <div class="tag-right">Enterprise Transformation Starts with the Right Opportunities</div>
+</header>
+<div class="shell">
+  <aside class="side" id="side" aria-label="Main navigation"></aside>
+  <main class="main">
+    <div id="view"></div>
+    <p class="footnote">Synthetic demonstrator. Scenarios and figures are illustrative, not real customer data. AI behaviour is simulated using predefined scenario responses; the final decision is always human.</p>
+  </main>
+</div>
+<input type="file" id="fileIn" multiple hidden>
+<div class="toast" id="toast" hidden role="status"></div>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- Icons ---------- */
+var ICON={
+  chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+  warn:'<path d="M12 3l10 18H2L12 3z"/><path d="M12 10v5M12 18v.5"/>',
+  doc:'<path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h8"/>',
+  check:'<path d="M5 12l5 5 9-10"/>',
+  edit:'<path d="M4 20l4-1 11-11-3-3L5 16z"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 8v.5M12 11v6"/>',
+  x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  back:'<path d="M19 12H5M11 6l-6 6 6 6"/>',
+  home:'<path d="M3 11l9-8 9 8M5 10v10h14V10"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  folder:'<path d="M3 6h6l2 2h10v12H3z"/>',
+  assess:'<path d="M5 4h14v16H5zM9 9h6M9 13h6"/>',
+  backlog:'<path d="M4 6h16M4 12h16M4 18h10"/>',
+  report:'<path d="M5 20V10M12 20V4M19 20v-7"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  down:'<path d="M6 9l6 6 6-6"/>'
+};
+function ico(n,s){s=s||18;return '<svg class="ico" viewBox="0 0 24 24" width="'+s+'" height="'+s+'" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICON[n]+'</svg>';}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+
+/* ---------- Constants ---------- */
+var STEPS=['Intake','Interpret','Clarify','Assess','Recommend','Review'];
+var TITLES=[
+  ['Opportunity Intake','Capture a business idea or a process mining finding'],
+  ['AI Interpretation','Review and refine the AI’s understanding'],
+  ['Clarification','Answer additional questions to improve the assessment'],
+  ['Assessment','AI-assisted evaluation across key dimensions'],
+  ['Intervention Recommendation','Suggested approach with rationale and alternatives'],
+  ['Human Review','Validate, modify or reject the recommendation']
+];
+var TAG={P:'Provided',I:'AI inference',U:'Unknown',E:'Edited by you'};
+var DIMS=[
+  {k:'value',name:'Business Value',icon:'chart'},
+  {k:'feas',name:'Feasibility',icon:'gear'},
+  {k:'risk',name:'Risk',icon:'warn'},
+  {k:'evid',name:'Evidence Confidence',icon:'doc'}
+];
+var LV={Low:0,Medium:1,High:2};
+var LADDER=['No change','Process redesign','Business rules','Workflow / RPA','Predictive ML','Generative AI','Agentic AI'];
+var OUTCOMES=['Reject','Refine','Explore','Prototype','Pilot','Candidate for Prioritization'];
+var DECS={accept:'Accept',modify:'Modify',request:'Request More Information',reject:'Reject'};
+
+/* ---------- Field specs ---------- */
+var FIELDS={
+  business:[
+    {k:'title',label:'Opportunity Title',req:1,type:'text',ph:'Enter a short and clear title'},
+    {k:'process',label:'Business Process',req:1,type:'text',ph:'e.g. Invoice to Pay, Customer Onboarding'},
+    {k:'problem',label:'Problem Description',req:1,type:'area',ph:'Describe the current problem, challenges and impact'},
+    {k:'stakeholder',label:'Affected Stakeholder',req:1,type:'text',ph:'e.g. Finance Team',half:1},
+    {k:'volume',label:'Frequency / Volume',type:'text',ph:'e.g. 1,000 transactions per month',half:1},
+    {k:'outcome',label:'Expected Outcome',req:1,type:'area',ph:'What do you want to achieve?'}
+  ],
+  pm:[
+    {k:'pmTitle',label:'Finding Title',req:1,type:'text',ph:'Enter a short and clear title'},
+    {k:'pmProcess',label:'Business Process',req:1,type:'text',ph:'e.g. Procure to Pay'},
+    {k:'pmSignal',label:'Observed Signal',req:1,type:'select',options:['Select a signal type','Bottleneck','Rework or repeated activity','Long waiting time','Manual hand-off','Process deviation']},
+    {k:'pmDesc',label:'Observation Description',req:1,type:'area',ph:'Describe what the process analysis shows'},
+    {k:'pmCases',label:'Cases Analysed',type:'text',ph:'e.g. 10,000 cases',half:1},
+    {k:'pmRepeat',label:'Share Affected',type:'text',ph:'e.g. 15% of cases',half:1},
+    {k:'pmWait',label:'Additional Waiting Time',type:'text',ph:'e.g. 2 days',half:1},
+    {k:'pmSource',label:'Source of Finding',type:'text',ph:'e.g. process mining tool or analysis',half:1},
+    {k:'pmValidated',label:'Business Validation Status',type:'select',options:['Select an option','Not yet validated','Partly validated with process owner','Validated with process owner']}
+  ]
+};
+
+/* ---------- Scenarios (synthetic) ---------- */
+var SCN={
+A:{id:'A',label:'A · Vendor Invoice Approval',path:'business',
+  sample:{title:'Automate vendor invoice approval with AI assistance',process:'Invoice to Pay',
+    problem:'Invoice approvals take too long because each invoice goes through several manual checks. Suppliers keep following up on status, which adds to delays and team workload.',
+    stakeholder:'Finance Team, Accounts Payable',volume:'~1,000 invoices per month',
+    outcome:'Faster invoice approvals, reduced manual effort and improved supplier satisfaction.'},
+  aiSummary:'Vendor invoice approvals are taking longer due to multiple manual checks. Suppliers frequently follow up, causing delays and increased operational effort.',
+  terms:['invoice','approval','manual review','supplier','delay','automation','AI'],
+  clar:[
+    {q:'What is the current average cycle time for invoice approval?',type:'text',sample:'3–5 days',ph:'e.g. 3–5 days'},
+    {q:'What are the main systems involved in this process?',type:'text',sample:'SAP, Outlook, supplier email',ph:'e.g. SAP, Oracle, Outlook'},
+    {q:'Is the process consistent across business units or does it vary?',type:'select',options:['Select an option','Consistent across business units','Mostly consistent, minor variations','Varies significantly by business unit','Not known'],sample:'Mostly consistent, minor variations'}
+  ],
+  assess:{
+    value:{level:'High',bullets:[['High transaction volume (~1,000 invoices per month)','P'],['Reduces manual effort in repeated approval checks','I'],['Improves supplier satisfaction through fewer status follow-ups','I']],key:['Key Evidence','~1,000 invoices/month'],flip:'A confirmed cycle time and manual-effort estimate would firm up this rating; very low exception volume would reduce it.'},
+    feas:{level:'Medium',bullets:[['Process is repetitive but has exceptions','I'],['System integration required (ERP, email)','I'],['Data availability to be confirmed','U']],key:['Key Assumption','API access available'],flip:'Confirmed ERP API access would raise this to High; restricted access would lower it.'},
+    risk:{level:'Medium',bullets:[['Incorrect approvals may cause financial control issues','I'],['Supplier and payment data needs privacy review','I'],['Change management required for the AP team','I']],key:['Key Consideration','Financial control impact'],flip:'Defined approval limits and audit logging would reduce this; unclear exception ownership would raise it.'},
+    evid:{level:'Medium',bullets:[['Core problem is clear and described consistently','P'],['Some key information is missing (cycle time, systems)','U'],['Requires validation with the process owner','I']],key:['Information Gap','Cycle time and systems'],flip:'Evidence-backed answers to the clarification questions would move this towards High.'}
+  },
+  rec:{name:'Workflow Automation + Generative AI Assistance',
+    desc:'Automate the structured approval steps and use Generative AI to assist with exception handling and invoice queries.',
+    ladder:[3,5],
+    why:['The process is repetitive with clearly defined approval rules.','Unstructured information (supplier emails, multi-system data) requires interpretation.','This approach can reduce cycle time, lower manual effort and improve supplier experience.','It balances value, feasibility and risk.'],
+    others:[
+      ['Process redesign','Could remove some manual checks, but automation is still needed for structured steps.','Worth running alongside: simplify approval tiers first, then automate what remains.'],
+      ['Deterministic rules','Suitable for simple cases, but does not handle unstructured exceptions.','Rules remain the backbone of the approval steps and are part of the workflow automation.'],
+      ['RPA','Feasible, but less flexible for handling unstructured information and exceptions.','Screen-level bots are brittle when supplier formats or screens change.']],
+    notRec:{title:'Why Agentic AI is not recommended (for now)',bullets:['The current use case does not require autonomous multi-step decision-making.','Key system and data details are not yet confirmed.','A simpler and more controlled approach is appropriate at this stage.']},
+    assumption:'Required system APIs will be available for integration.',
+    risk:'Incorrect handling of exceptions may lead to payment delays or errors.',
+    suggested:'Explore'}
+},
+B:{id:'B',label:'B · Employee Leave Approval',path:'business',
+  sample:{title:'Use AI agents to approve employee leave requests',process:'Leave Management',
+    problem:'Managers and HR spend time approving routine leave requests, and employees wait one to two days for a decision. Leave policy is documented and applied consistently.',
+    stakeholder:'HR Operations, Line Managers, Employees',volume:'~2,500 requests per month',
+    outcome:'Faster leave decisions with less manager and HR effort.'},
+  aiSummary:'Routine leave requests take one to two days to approve, consuming manager and HR time. The request proposes AI agents, but leave decisions follow documented, explicit policy rules.',
+  terms:['leave','approval','policy','manager','HR','AI agents','waiting time'],
+  clar:[
+    {q:'Is the leave policy fully documented and rule-based?',type:'select',options:['Select an option','Yes, fully documented and rule-based','Mostly, with some manager discretion','No, mostly judgement-based','Not known'],sample:'Yes, fully documented and rule-based'},
+    {q:'What share of requests needs manual interpretation or exception handling?',type:'text',sample:'Under 10%',ph:'e.g. 10%'},
+    {q:'Which systems hold leave balances and team calendars?',type:'text',sample:'HR system, shared calendar',ph:'e.g. Workday, Outlook'}
+  ],
+  assess:{
+    value:{level:'Medium',bullets:[['High request volume (~2,500 per month) with low effort per request','P'],['Faster decisions improve employee experience','I'],['Manager and HR time saved is modest per request','I']],key:['Key Evidence','~2,500 requests/month'],flip:'Evidence of long waits or high HR effort per request would raise this; minimal delay would lower it.'},
+    feas:{level:'High',bullets:[['Explicit, documented policy rules','P'],['Structured data (balances, dates, team coverage)','I'],['Stable process with few exceptions','I']],key:['Key Assumption','Balances and calendars readable via integration'],flip:'Confirmed system integration keeps this High; heavy manual interpretation would lower it.'},
+    risk:{level:'Low',bullets:[['Employee personal data needs standard access controls','I'],['Low financial impact per decision','I'],['Statutory or medical leave must route to HR','I']],key:['Key Consideration','Statutory leave exceptions'],flip:'Extending the same logic to sensitive leave types would raise this.'},
+    evid:{level:'High',bullets:[['Policy is documented and the process is described clearly','P'],['Volume provided; waiting time stated as one to two days','P'],['System integration details still to be confirmed','U']],key:['Information Gap','Integration details'],flip:'Confirmed integration details would close the remaining gap.'}
+  },
+  rec:{name:'Business Rules + Workflow Automation',
+    desc:'Encode the leave policy as deterministic rules and automate routing, approval and notifications, escalating exceptions to HR.',
+    ladder:[2,3],
+    why:['Decisions follow explicit policy with predictable outcomes and little need for interpretation.','Deterministic rules are cheaper, faster and fully auditable compared with AI agents.','Workflow automation removes manual routing and reminder effort.','Exceptions, such as statutory or medical leave, still escalate to a person.'],
+    others:[
+      ['Agentic AI','Adds cost and unpredictability without improving the decision.','Policy outcomes are deterministic, so an agent would only reproduce what rules already do, with weaker auditability.'],
+      ['Generative AI assistant','Could answer policy questions, but does not remove approval delay.','May suit a separate employee help use case; it is not the approval fix.'],
+      ['Process redesign','Pre-approving low-risk leave types could cut requests needing review.','Complements rules and can be assessed once the policy is encoded.']],
+    notRec:{title:'Why AI agents are not recommended (for now)',bullets:['Leave decisions follow explicit policy, so interpretation adds little value.','Agent behaviour is less predictable and harder to audit than rules.','Model and platform cost would exceed the benefit at this volume.']},
+    assumption:'Leave balances and team calendars can be read through integration.',
+    risk:'Statutory or medical leave mis-routed as routine could breach policy.',
+    suggested:'Candidate for Prioritization'}
+},
+C:{id:'C',label:'C · Customer Complaint Resolution',path:'business',
+  sample:{title:'Resolve customer complaints faster with AI agents',process:'Customer Complaint Resolution',
+    problem:'Service agents manually collect customer history from CRM, billing and order systems, interpret the complaint, choose a resolution and update each system. Resolution takes several days, quality varies and some outcomes involve refunds or credits.',
+    stakeholder:'Customer Service, Billing Operations',volume:'~4,000 complaints per month',
+    outcome:'Faster, more consistent resolutions with fewer handoffs, while keeping financial actions controlled.'},
+  aiSummary:'Complaint resolution requires gathering context across several systems, interpreting the issue, selecting a resolution and updating records, sometimes with financial impact. Resolution is slow and inconsistent.',
+  terms:['complaint','resolution','CRM','billing','refund','credit','agent','systems'],
+  clar:[
+    {q:'What are the current approval limits for refunds and credits?',type:'text',sample:'Agents up to USD 100; above that, team lead approval',ph:'e.g. agents up to USD 100'},
+    {q:'Which systems would need read and write access?',type:'text',sample:'CRM, billing, order management',ph:'e.g. CRM, billing, order management'},
+    {q:'What share of complaints needs data from three or more systems?',type:'select',options:['Select an option','Under 25%','25–60%','Over 60%','Not known'],sample:'25–60%'}
+  ],
+  assess:{
+    value:{level:'High',bullets:[['High complaint volume (~4,000 per month)','P'],['Multi-system lookups consume most handling time','I'],['Faster, consistent resolution improves customer retention','I']],key:['Key Evidence','~4,000 complaints/month'],flip:'Measured handling time and resolution-quality variation would firm this up.'},
+    feas:{level:'Medium',bullets:[['Multi-step coordination across several systems','I'],['Write access needs controlled, role-scoped integration','I'],['Complaint types and resolution rules not yet catalogued','U']],key:['Key Assumption','Sandboxed, role-scoped system access is possible'],flip:'Confirmed role-scoped access would raise this; restricted write access would lower it.'},
+    risk:{level:'High',bullets:[['Incorrect refunds or credits create direct financial loss','I'],['Customer personal and payment data is processed across systems','I'],['Complaint handling may carry regulatory obligations','I']],key:['Key Consideration','Financial and regulatory exposure'],flip:'Strict action limits, approval gates and logging reduce exposure but do not remove it.'},
+    evid:{level:'Medium',bullets:[['Workflow steps are described clearly','P'],['Approval limits and system access are not yet confirmed','U'],['Variation in resolution quality is not quantified','U']],key:['Information Gap','Approval limits and system access'],flip:'Confirmed approval limits and system access would move this towards High.'}
+  },
+  rec:{name:'Bounded Agentic AI + Human Approval for Financial Actions',
+    desc:'Let an agent gather context and draft resolutions within defined limits; any refund, credit or system update with financial impact needs human approval.',
+    ladder:[3,6],
+    why:['The workflow needs multi-step coordination across systems and interpretation of context.','Agent autonomy is limited to read-only gathering and drafting; financial actions stay with people.','Full logging and escalation keep every action auditable.','Simpler options would leave most of the manual multi-system work in place.'],
+    others:[
+      ['Workflow automation + rules','Handles known complaint types, but cannot interpret varied complaints.','Remains the control layer inside the recommended approach (routing, limits, approvals).'],
+      ['Generative AI assistant only','Helps summarise and draft, but people still do the multi-system work.','A sensible fallback if risk reviewers do not accept agent autonomy.'],
+      ['Process redesign first','Reducing handoffs helps, but does not remove manual lookups.','Run in parallel; it lowers the volume the agent must handle.']],
+    notRec:{title:'Why unbounded autonomy is not recommended',bullets:['Autonomous refunds and credits would expose the business to financial loss.','Approval limits and system access are not yet confirmed.','Regulatory and audit expectations call for a human decision on financial actions.']},
+    assumption:'Role-scoped, sandboxed access to CRM, billing and order systems with action logging.',
+    risk:'An incorrect refund or credit, or exposure of customer data, if autonomy limits are weak.',
+    suggested:'Prototype'}
+},
+D:{id:'D',label:'D · Repeated Approval Loop (Process Mining)',path:'pm',
+  sample:{pmTitle:'Repeated approval activity in purchase-order approval',pmProcess:'Procure to Pay: Purchase Order Approval',
+    pmSignal:'Rework or repeated activity',
+    pmDesc:'Process mining shows the approval activity repeating for a share of purchase orders, with extra waiting time before the order is released. The reason for the repeats has not been analysed.',
+    pmCases:'~12,000 purchase orders analysed',pmRepeat:'~18% with repeated approval',pmWait:'~2.4 days additional waiting',
+    pmSource:'Process mining analysis (synthetic)',pmValidated:'Not yet validated'},
+  aiSummary:'Approval activity repeats for roughly one in five purchase orders and adds waiting time before release.',
+  hypo:'Purchase orders are likely being returned for missing or incorrect mandatory information, causing repeat approvals. This is a hypothesis and has not been validated.',
+  aiStake:'Procurement, Requesters, Approvers',
+  aiOutcome:'Fewer approval repeats and a shorter time to release purchase orders.',
+  terms:['purchase order','approval loop','rework','waiting time','process mining','hand-off'],
+  clar:[
+    {q:'Why are purchase orders returned or re-approved?',type:'text',sample:'Not analysed yet; suspected missing cost centre or justification',ph:'e.g. missing information, threshold rules'},
+    {q:'Is the repeat pattern consistent across business units and plants?',type:'select',options:['Select an option','Consistent across units','Concentrated in a few units','Not known'],sample:'Not known'},
+    {q:'Has the finding been validated with the process owner?',type:'select',options:['Select an option','Not yet','Partly','Yes, fully'],sample:'Not yet'}
+  ],
+  assess:{
+    value:{level:'Medium',bullets:[['About 18% of ~12,000 purchase orders show repeated approval','P'],['~2.4 days of additional waiting delays purchasing and supplier commitments','P'],['Financial impact per delayed order not yet estimated','U']],key:['Key Evidence','~18% of orders, ~2.4 days extra wait'],flip:'An estimate of the cost of each delayed order would sharpen this rating.'},
+    feas:{level:'High',bullets:[['Likely fixable through process and system configuration','I'],['No new technology or model required','I'],['Root cause still to be confirmed','U']],key:['Key Assumption','Repeats stem from missing or incorrect submission data'],flip:'A validated root cause would confirm this; a policy-driven cause would lower it.'},
+    risk:{level:'Low',bullets:[['Low operational risk from adding validation to the order form','I'],['Approvers may see a changed workload and need communication','I'],['A misdiagnosed root cause could waste effort','I']],key:['Key Consideration','Root-cause misdiagnosis'],flip:'Validation with the process owner would lower this further.'},
+    evid:{level:'Medium',bullets:[['Process mining shows what is happening, with measured volume and delay','P'],['Why it happens is an AI hypothesis, not evidence','I'],['Not yet validated with the process owner','U']],key:['Information Gap','Root cause and business validation'],flip:'Validation with the process owner would move this towards High.'}
+  },
+  rec:{name:'Process Redesign + Mandatory-Field Validation Rules',
+    desc:'Fix the likely cause at submission: redesign the request step and enforce mandatory-field validation before an order enters approval.',
+    ladder:[1,2],
+    why:['The signal points to a process and data-quality issue rather than a decision that needs AI.','Validation rules are inexpensive, quick to implement and fully auditable.','Fixing causes at the source avoids repeated approver effort downstream.','The hypothesis can be tested quickly by measuring the repeat rate after the change.'],
+    others:[
+      ['Workflow automation','Would speed up each approval, but not remove the repeats.','Automating a loop makes the loop faster; it does not remove the cause.'],
+      ['Predictive ML on returns','Premature before the root cause is understood.','Predicting which orders will be returned only pays off once returns are shown to be unavoidable.'],
+      ['Generative or Agentic AI','No unstructured or multi-step reasoning need is evident.','Considered and set aside; revisit only if validation shows interpretation-heavy exceptions.']],
+    notRec:{title:'Why AI is not recommended (for now)',bullets:['The likely cause is a process and data-quality problem, which rules can address.','The root cause has not been validated, so advanced technology would be premature.','Process mining reveals the signal; it does not by itself justify AI.']},
+    assumption:'Repeated approvals are caused by missing or incorrect mandatory information at submission.',
+    risk:'If repeats are driven by approval-threshold policy, validation rules will not fix the delay.',
+    suggested:'Refine'}
+}};
+
+/* ---------- State ---------- */
+var S={page:'flow',records:[],cur:null};
+function scn(){return SCN[S.sid];}
+function resetFlow(sid){
+  S.sid=sid;S.step=0;S.vals=JSON.parse(JSON.stringify(SCN[sid].sample));S.touched={};S.files=[];
+  S.interp=null;S.interpSig='';S.terms=[];S.editing=null;S.editBuf='';
+  S.clar=SCN[sid].clar.map(function(c){return {val:c.sample,touched:false,unknown:false,gap:false};});
+  S.open={};S.opt={};
+  S.dec={type:null,rationale:'',outcome:'',interv:'',levels:{}};
+  S.trail={};
+}
+resetFlow('A');
+
+/* ---------- Helpers ---------- */
+var $=function(s){return document.querySelector(s);};
+function chip(dim,lv){var g=dim==='risk'?2-LV[lv]:LV[lv];return '<span class="chip '+(g===2?'good':g===1?'mid':'bad')+'">'+lv+'</span>';}
+function gi(k){var r=(S.interp||[]).filter(function(x){return x.k===k;})[0];return r?r.value:'';}
+function openGaps(){return S.clar.filter(function(c){return c.unknown||c.gap;}).length;}
+function logEv(k,text){S.trail[k]={t:Date.now(),text:text};}
+function tm(t){return new Date(t).toLocaleTimeString();}
+function toast(m){var t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(function(){t.hidden=true;},2800);}
+function pathLabel(p){return p==='pm'?'Process Mining Finding':'Business Idea';}
+
+/* ---------- Governance (deterministic) ---------- */
+function finalLevels(){
+  var a=scn().assess,out={};
+  DIMS.forEach(function(d){out[d.k]=(S.dec.type==='modify'&&S.dec.levels[d.k])?S.dec.levels[d.k]:a[d.k].level;});
+  return out;
+}
+function gateLevels(){
+  var a=scn().assess,f=finalLevels();
+  var risk=LV[f.risk]>LV[a.risk.level]?f.risk:a.risk.level;
+  var evid=LV[f.evid]<LV[a.evid.level]?f.evid:a.evid.level;
+  return {risk:risk,evid:evid};
+}
+function outcomeState(o){
+  var t=S.dec.type,g=gateLevels();
+  if(!t)return {ok:false,why:'choose a decision first'};
+  if(t==='reject')return {ok:o==='Reject',why:'fixed by the Reject decision'};
+  if(t==='request')return {ok:o==='Refine',why:'fixed by the Request More Information decision'};
+  if(o==='Reject')return {ok:false,why:'use the Reject decision'};
+  if(o==='Pilot'||o==='Candidate for Prioritization'){
+    if(g.risk==='High')return {ok:false,why:'blocked: high risk needs specialist review first'};
+    if(g.evid==='Low')return {ok:false,why:'blocked: low evidence confidence'};
+  }
+  return {ok:true,why:''};
+}
+function gates(){
+  var g=gateLevels(),d=S.dec,list=[];
+  list.push({s:d.type?'ok':'info',t:d.type?'Human decision recorded: '+DECS[d.type]+'.':'A human decision is required. The product never approves funding or backlog entry.'});
+  if(d.type==='modify'||d.type==='reject')list.push({s:d.rationale.trim()?'ok':'flag',t:d.rationale.trim()?'Rationale provided for '+DECS[d.type]+'.':'Rationale is required for Modify or Reject.'});
+  list.push(g.risk==='High'?{s:'flag',t:'High risk: specialist review is required. Pilot and Candidate for Prioritization are blocked.'}:{s:'ok',t:'Risk gate: '+g.risk+'. No specialist review block.'});
+  list.push(g.evid==='Low'?{s:'flag',t:'Low evidence confidence: Pilot and Candidate for Prioritization are blocked.'}:{s:'ok',t:'Evidence gate: '+g.evid+' confidence.'});
+  var n=openGaps();
+  list.push({s:n?'info':'ok',t:n?n+' information gap'+(n>1?'s':'')+' carried forward and recorded.':'No information gaps carried forward.'});
+  list.push({s:'info',t:'Gates use the more cautious of the AI and reviewer ratings, so lowering a risk rating cannot lift a block.'});
+  return list;
+}
+
+/* ---------- Interpretation ---------- */
+function buildInterp(){
+  var sc=scn(),v=S.vals;
+  function mod(k){return v[k]!==sc.sample[k];}
+  if(sc.path==='business'){
+    return [
+      {k:'title',label:'Opportunity Title',value:v.title.trim(),badge:'P'},
+      {k:'process',label:'Business Process',value:v.process.trim(),badge:'P'},
+      {k:'summary',label:'Problem Summary',value:mod('problem')?v.problem.trim():sc.aiSummary,badge:'I',note:mod('problem')?'Simulated: your text is restated as entered. A live model would summarise it.':''},
+      {k:'stake',label:'Affected Stakeholders',value:v.stakeholder.trim(),badge:'P'},
+      {k:'vol',label:'Frequency / Volume',value:v.volume.trim()||'Not provided',badge:v.volume.trim()?'P':'U'},
+      {k:'outcome',label:'Expected Outcome',value:v.outcome.trim(),badge:'P'}
+    ];
+  }
+  var ev=[v.pmCases,v.pmRepeat,v.pmWait].filter(function(x){return x&&x.trim();}).join('; ')||'Not provided';
+  return [
+    {k:'title',label:'Finding Title',value:v.pmTitle.trim(),badge:'P'},
+    {k:'process',label:'Business Process',value:v.pmProcess.trim(),badge:'P'},
+    {k:'signal',label:'Observed Signal',value:v.pmSignal,badge:'P'},
+    {k:'summary',label:'Observation Summary',value:mod('pmDesc')?v.pmDesc.trim():sc.aiSummary,badge:'I',note:mod('pmDesc')?'Simulated: your text is restated as entered. A live model would summarise it.':''},
+    {k:'hypo',label:'Likely Problem',value:sc.hypo,badge:'I'},
+    {k:'evidence',label:'Evidence Provided',value:ev,badge:ev==='Not provided'?'U':'P'},
+    {k:'stake',label:'Affected Stakeholders',value:sc.aiStake,badge:'I'},
+    {k:'outcome',label:'Expected Outcome',value:sc.aiOutcome,badge:'I'}
+  ];
+}
+
+/* ---------- Screens ---------- */
+function fieldHTML(f){
+  var v=S.vals[f.k]==null?'':S.vals[f.k],sample=!S.touched[f.k]&&v===scn().sample[f.k];
+  var cls='inp'+(sample?' sample':''),ctl;
+  if(f.type==='area')ctl='<textarea class="'+cls+'" data-k="'+f.k+'" rows="3" placeholder="'+esc(f.ph)+'">'+esc(v)+'</textarea>';
+  else if(f.type==='select')ctl='<select class="'+cls+'" data-k="'+f.k+'">'+f.options.map(function(o){return '<option'+(o===v?' selected':'')+'>'+esc(o)+'</option>';}).join('')+'</select>';
+  else ctl='<input class="'+cls+'" data-k="'+f.k+'" value="'+esc(v)+'" placeholder="'+esc(f.ph)+'">';
+  return '<label class="fld'+(f.half?' half':'')+'"><span class="lbl">'+f.label+(f.req?' <b class="req">*</b>':'')+'</span>'+ctl+'</label>';
+}
+function sIntake(){
+  var biz=scn().path==='business';
+  var tabs='<div class="tabs" role="tablist"><button class="tab'+(biz?' on':'')+'" data-act="tab" data-t="business" role="tab">Business Idea</button><button class="tab'+(biz?'':' on')+'" data-act="tab" data-t="pm" role="tab">Process Mining Finding</button></div>';
+  var note=biz?'':'<p class="note-i">'+ico('info',16)+'<span>A process finding is discovery evidence. It is not treated as an approved investment opportunity until a person qualifies it.</span></p>';
+  var files=S.files.length?'<ul class="files">'+S.files.map(function(f){return '<li>'+esc(f.name)+' ('+Math.max(1,Math.round(f.size/1024))+' KB) · attached for reference only</li>';}).join('')+'</ul>':'';
+  var drop='<div class="drop" data-act="upload" tabindex="0" role="button">Drag and drop files here or click to choose<div class="small">e.g. process map, SOP, data extract, screenshots (optional). Files are not uploaded or analysed in this demonstrator.</div></div>'+files;
+  return tabs+note+'<div class="fgrid">'+FIELDS[scn().path].map(fieldHTML).join('')+'</div><p class="lbl" style="margin-top:14px">Supporting Evidence <span class="muted" style="font-weight:400">(optional)</span></p>'+drop+
+    '<p class="msg" id="msg" role="alert"></p><div class="foot"><button class="btn" data-act="reset">Reset sample values</button><button class="btn pri" data-act="next">Continue '+ico('arrow',16)+'</button></div>';
+}
+function sInterp(){
+  var rows=S.interp.map(function(r){
+    var ed=S.editing===r.k,long=r.value.length>70||r.k==='summary'||r.k==='hypo';
+    var val=ed?'<div class="edit">'+(long?'<textarea class="inp" rows="3" data-ik>'+esc(S.editBuf)+'</textarea>':'<input class="inp" data-ik value="'+esc(S.editBuf)+'">')+'<div class="row-actions"><button class="btn pri sm" data-act="save">Save</button><button class="btn sm" data-act="cancelEdit">Cancel</button></div></div>'
+      :'<div class="val">'+esc(r.value)+(r.note?'<div class="small muted">'+esc(r.note)+'</div>':'')+'</div>';
+    return '<div class="irow"><div class="ilab">'+r.label+'<span class="tag t-'+r.badge+'">'+TAG[r.badge]+'</span></div>'+val+(ed?'':'<button class="lnk" data-act="edit" data-k="'+r.k+'">'+ico('edit',14)+' Edit</button>')+'</div>';
+  }).join('');
+  var terms=S.terms.map(function(t,i){return '<button class="term'+(t.on?' on':'')+'" data-act="term" data-i="'+i+'" aria-pressed="'+t.on+'">'+esc(t.t)+'</button>';}).join('');
+  return '<p class="lead">AI has interpreted your submission as follows</p><div class="tagkey">'+['P','I','U','E'].map(function(k){return '<span class="tag t-'+k+'">'+TAG[k]+'</span>';}).join('')+'<span>Facts, AI inferences and unknowns are kept apart.</span></div>'+rows+
+    '<p class="lbl" style="margin-top:14px">Key Terms Identified by AI</p><div class="terms">'+terms+'</div><div class="addterm"><input class="inp" id="newTerm" placeholder="Add a term"><button class="btn sm" data-act="addterm">Add</button></div>'+
+    '<div class="foot"><button class="btn" data-act="back">'+ico('back',16)+' Back</button><button class="btn pri" data-act="next">Confirm Interpretation '+ico('arrow',16)+'</button></div>';
+}
+function sClar(){
+  var sc=scn();
+  var qs=sc.clar.map(function(q,i){
+    var c=S.clar[i],dis=c.unknown||c.gap,cls='inp'+((!c.touched&&c.val===q.sample)?' sample':''),ctl;
+    if(q.type==='select')ctl='<select class="'+cls+'" data-ci="'+i+'"'+(dis?' disabled':'')+'>'+q.options.map(function(o){return '<option'+(o===c.val?' selected':'')+'>'+esc(o)+'</option>';}).join('')+'</select>';
+    else ctl='<textarea class="'+cls+'" rows="2" data-ci="'+i+'" placeholder="'+esc(q.ph)+'"'+(dis?' disabled':'')+'>'+esc(c.val)+'</textarea>';
+    return '<div class="q"><div class="qh"><span class="qn">'+(i+1)+'</span><b>'+esc(q.q)+'</b></div>'+ctl+'<div class="checks"><label class="ck"><input type="checkbox" data-ci="'+i+'" data-w="unknown"'+(c.unknown?' checked':'')+'> Unknown at this time</label><label class="ck"><input type="checkbox" data-ci="'+i+'" data-w="gap"'+(c.gap?' checked':'')+'> Continue with this gap</label></div></div>';
+  }).join('');
+  return '<h3 style="font-size:17px;margin-bottom:4px">A few more details are needed</h3><p class="muted" style="margin-bottom:14px">To provide a more accurate assessment, please help us with the following. Sample answers are pre-filled; keep or edit them, or record the information as unknown.</p>'+qs+
+    '<p class="msg" id="msg" role="alert"></p><div class="foot"><button class="btn" data-act="back">'+ico('back',16)+' Back</button><button class="btn pri" data-act="next">Continue to Assessment '+ico('arrow',16)+'</button></div>';
+}
+function clarStatus(i){var c=S.clar[i];return c.unknown?'unknown':c.gap?'gap':'answered';}
+function clarLedger(){
+  return '<ul class="ledger">'+scn().clar.map(function(q,i){var s=clarStatus(i);return '<li><span>'+esc(q.q)+'</span><span class="tag t-'+(s==='answered'?'P':'U')+'">'+(s==='answered'?'Answered':s==='unknown'?'Unknown':'Gap accepted')+'</span></li>';}).join('')+'</ul>';
+}
+function sAssess(){
+  var a=scn().assess,g=openGaps();
+  var cards=DIMS.map(function(d){
+    var x=a[d.k],open=S.open[d.k];
+    return '<article class="dcard"><header><span class="dic">'+ico(d.icon,20)+'</span><h4>'+d.name+'</h4>'+chip(d.k,x.level)+'</header><ul class="bul">'+
+      x.bullets.map(function(b){return '<li>'+esc(b[0])+(open?'<span class="tag t-'+b[1]+'">'+TAG[b[1]]+'</span>':'')+'</li>';}).join('')+'</ul>'+
+      (open?'<p class="flip"><b>What could change this rating:</b> '+esc(x.flip)+'</p>'+(d.k==='evid'?clarLedger():''):'')+
+      '<button class="key" data-act="dim" data-d="'+d.k+'" aria-expanded="'+!!open+'"><span><b>'+x.key[0]+':</b> '+esc(x.key[1])+'</span><span class="lnk">'+(open?'Hide':'Inspect')+' '+ico(open?'x':'down',14)+'</span></button></article>';
+  }).join('');
+  return '<p class="lead">Based on the information provided, here is the initial assessment.'+(g?' <span class="tag t-U">'+g+' open gap'+(g>1?'s':'')+' carried forward</span>':'')+'</p><div class="dgrid">'+cards+'</div>'+
+    '<div class="foot"><button class="btn" data-act="back">'+ico('back',16)+' Back</button><button class="btn pri" data-act="next">Continue to Recommendation '+ico('arrow',16)+'</button></div>';
+}
+function sRec(){
+  var r=scn().rec,a=scn().assess;
+  var ladder='<p class="lbl" style="margin-bottom:6px">Least complex sufficient intervention</p><ul class="ladder">'+LADDER.map(function(n,i){return '<li class="'+(r.ladder.indexOf(i)>-1?'on':'')+'">'+n+'</li>';}).join('')+'</ul>';
+  var others=r.others.map(function(o){return '<details class="opt"><summary><b>'+esc(o[0])+'</b> – '+esc(o[1])+'</summary><p>'+esc(o[2])+'</p></details>';}).join('');
+  return '<p class="lbl" style="margin-bottom:8px">Recommended Intervention</p>'+ladder+
+    '<div class="banner">'+ico('target',34)+'<div><h3>'+esc(r.name)+'</h3><p>'+esc(r.desc)+'</p></div></div>'+
+    '<div class="box"><h4>Why this recommendation?</h4><ul>'+r.why.map(function(w){return '<li>'+esc(w)+'</li>';}).join('')+'</ul></div>'+
+    '<div class="twocol"><div class="box"><h4>Other options considered</h4>'+others+'</div><div class="box warn"><h4>'+esc(r.notRec.title)+'</h4><ul>'+r.notRec.bullets.map(function(w){return '<li>'+esc(w)+'</li>';}).join('')+'</ul></div></div>'+
+    '<div class="twocol"><div class="box kv2">'+ico('info',18)+'<div><h4>Key Assumption</h4><p>'+esc(r.assumption)+'</p></div></div><div class="box kv2">'+ico('warn',18)+'<div><h4>Key Risk</h4><p>'+esc(r.risk)+'</p></div></div></div>'+
+    '<p class="small muted" style="margin-top:10px">Evidence confidence for this recommendation: '+chip('evid',a.evid.level)+' The recommendation is a draft for human review.</p>'+
+    '<div class="foot"><button class="btn" data-act="back">'+ico('back',16)+' Back</button><button class="btn pri" data-act="next">Continue to Review '+ico('arrow',16)+'</button></div>';
+}
+function submitProblems(){
+  var p=[],d=S.dec;
+  if(!d.type)p.push('choose a decision');
+  if((d.type==='modify'||d.type==='reject')&&!d.rationale.trim())p.push('add a rationale');
+  if(d.type==='modify'&&!d.interv)p.push('select the modified intervention');
+  if(!d.outcome)p.push('select a final outcome');
+  return p;
+}
+function sReview(){
+  var sc=scn(),r=sc.rec,a=sc.assess,d=S.dec,f=finalLevels();
+  var tiles=[['accept','check','Accept','Proceed with recommended approach'],['modify','edit','Modify','Change intervention or assessment'],['request','info','Request More Information','Gather additional details'],['reject','x','Reject','Do not proceed with this opportunity']].map(function(t){
+    return '<button class="tile '+t[0]+(d.type===t[0]?' on':'')+'" data-act="dec" data-t="'+t[0]+'" aria-pressed="'+(d.type===t[0])+'"><b>'+ico(t[1],16)+t[2]+'</b><span>'+t[3]+'</span></button>';
+  }).join('');
+  var mod='';
+  if(d.type==='modify'){
+    var opts=[r.name].concat(r.others.map(function(o){return o[0];})).concat(['Other (explain in rationale)']);
+    mod='<div class="modp"><label class="fld"><span class="lbl">Modified intervention <b class="req">*</b></span><select class="inp" data-mi><option value="">Select an option</option>'+opts.map(function(o){return '<option'+(d.interv===o?' selected':'')+'>'+esc(o)+'</option>';}).join('')+'</select></label><div></div>'+
+      DIMS.map(function(x){return '<label class="fld half"><span class="lbl">'+x.name+' (AI: '+a[x.k].level+')</span><select class="inp" data-ml="'+x.k+'">'+['High','Medium','Low'].map(function(l){return '<option'+(f[x.k]===l?' selected':'')+'>'+l+'</option>';}).join('')+'</select></label>';}).join('')+'</div>';
+  }
+  var outs='<option value="">Select final outcome</option>'+OUTCOMES.map(function(o){var s=outcomeState(o);return '<option value="'+esc(o)+'"'+(s.ok?'':' disabled')+(d.outcome===o?' selected':'')+'>'+esc(o)+(s.ok||!d.type?'':' ('+s.why+')')+'</option>';}).join('');
+  var gl='<ul class="gates">'+gates().map(function(g){return '<li><span class="g-'+g.s+'">'+ico(g.s==='ok'?'check':g.s==='flag'?'warn':'info',16)+'</span><span>'+esc(g.t)+'</span></li>';}).join('')+'</ul>';
+  var probs=submitProblems();
+  return '<p class="lbl" style="margin-bottom:6px">Review and Take Action</p>'+
+    '<div class="sumcard"><div class="small muted">Opportunity</div><b>'+esc(gi('title'))+'</b><div class="small muted">'+esc(gi('process'))+' · Stakeholders: '+esc(gi('stake'))+'</div>'+
+    '<div class="chips4">'+DIMS.map(function(x){return '<div>'+x.name+chip(x.k,a[x.k].level)+'</div>';}).join('')+'</div>'+
+    '<div class="small muted">Recommended intervention</div><b>'+esc(r.name)+'</b><div class="small muted" style="margin-top:4px">Suggested outcome from the demo scenario: '+esc(r.suggested)+'</div></div>'+
+    '<p class="lbl">Your Decision</p><div class="tiles">'+tiles+'</div>'+mod+
+    '<label class="fld"><span class="lbl">Rationale <span class="muted" style="font-weight:400">(required for Modify or Reject)</span></span><textarea class="inp" rows="3" data-rat placeholder="Enter your comments, reason for modification or rejection, or additional guidance">'+esc(d.rationale)+'</textarea></label>'+
+    '<label class="fld" style="margin-top:12px"><span class="lbl">Final Outcome <b class="req">*</b></span><select class="inp" data-outc'+(d.type?'':' disabled')+'>'+outs+'</select></label>'+
+    '<p class="lbl" style="margin-top:14px">Governance checks (deterministic rules)</p>'+gl+
+    '<div class="foot"><button class="btn" data-act="back">'+ico('back',16)+' Back</button><button class="btn pri" id="submitBtn" data-act="submit"'+(probs.length?' disabled':'')+'>Submit Decision</button></div>'+
+    '<p class="hint" id="subHint">'+(probs.length?'To submit: '+probs.join(', ')+'.':'')+'</p>';
+}
+
+/* ---------- Flow page ---------- */
+function demoBar(){
+  return '<div class="demo"><label for="scnSel">Demo scenario <select id="scnSel" data-sc>'+Object.keys(SCN).map(function(k){return '<option value="'+k+'"'+(S.sid===k?' selected':'')+'>'+SCN[k].label+'</option>';}).join('')+'</select></label><span class="pill">Entry path: '+pathLabel(scn().path)+'</span><span class="pill syn">Synthetic data</span><span class="legend"><i>Grey text</i> is a sample value. Keep it or edit it.</span></div>';
+}
+function stepper(){
+  return '<nav class="stepper" aria-label="Progress">'+STEPS.map(function(s,i){
+    var cls=i<S.step?'done':i===S.step?'on':'';
+    var tag=i<S.step?'button':'div';
+    return '<'+tag+' class="st '+cls+'"'+(i<S.step?' data-act="step" data-i="'+i+'"':'')+(i===S.step?' aria-current="step"':'')+'><span class="dot">'+(i<S.step?ico('check',13):(i+1))+'</span><span class="l">'+s+'</span></'+tag+'>';
+  }).join('')+'</nav>';
+}
+function pageFlow(){
+  var t=TITLES[S.step],body=[sIntake,sInterp,sClar,sAssess,sRec,sReview][S.step]();
+  return demoBar()+stepper()+'<section class="panel"><div class="ph"><span class="num">'+(S.step+1)+'</span><div><h2>'+t[0]+'</h2><p>'+t[1]+'</p></div></div>'+body+'</section>';
+}
+
+/* ---------- Other pages ---------- */
+function pageHome(){
+  return '<section class="panel"><div class="ph"><span class="num">'+ico('home',20)+'</span><div><h2>IdeaHub AI product demonstrator</h2><p>AI-assisted transformation discovery, qualification and prioritization</p></div></div>'+
+    '<p style="max-width:70ch;margin-bottom:12px">IdeaHub AI turns a business idea or a process mining finding into a structured, explainable assessment. AI interprets, assesses and recommends. A person validates, challenges and decides.</p>'+
+    '<table class="kvt three"><thead><tr><th>Who</th><th>Does what</th><th>Examples</th></tr></thead><tbody>'+
+    '<tr><td>AI</td><td>Interprets, finds gaps, asks questions, classifies, recommends, explains</td><td>Screens 2 to 5</td></tr>'+
+    '<tr><td>Deterministic rules</td><td>Enforce governance conditions and workflow states</td><td>Rationale required, risk and evidence gates</td></tr>'+
+    '<tr><td>Human</td><td>Validates context, overrides, approves progression</td><td>Screen 6 decision record</td></tr></tbody></table>'+
+    '<p class="small muted" style="margin-bottom:14px">Principle: use AI to improve transformation decisions, not to maximise the use of AI. The strongest recommendation may be process redesign or rules.</p>'+
+    '<button class="btn pri" data-act="nav" data-p="flow">Start a new opportunity '+ico('arrow',16)+'</button></section>';
+}
+function pageOpps(){
+  var body=S.records.length?'<table class="kvt three tbl-click"><thead><tr><th>Record</th><th>Opportunity</th><th>Decision</th><th>Final outcome</th><th>Time</th></tr></thead><tbody>'+S.records.map(function(r,i){return '<tr data-act="openrec" data-i="'+i+'"><td>'+esc(r.id)+'</td><td>'+esc(r.title)+'</td><td>'+esc(DECS[r.decision])+'</td><td>'+esc(r.outcome)+'</td><td>'+esc(r.time)+'</td></tr>';}).join('')+'</tbody></table>'
+    :'<div class="empty">No decisions yet. Submit a decision on screen 6 and it will appear here for this browser session.</div>';
+  return '<section class="panel"><div class="ph"><span class="num">'+ico('folder',20)+'</span><div><h2>My Opportunities</h2><p>Decisions recorded in this session (kept in memory only)</p></div></div>'+body+'</section>';
+}
+var OOS={
+  assess:['Assessments','Assessment history, reviewer comments and the decision audit trail','Release 2'],
+  backlog:['Backlog','Opportunity comparison and a candidate backlog','Release 2'],
+  reports:['Reports','Portfolio dashboard and benefit tracking','Release 3'],
+  settings:['Settings','Configurable criteria, integrations and governance models','Release 3']
+};
+function pageOos(){
+  var o=OOS[S.oos];
+  return '<section class="panel"><div class="ph"><span class="num">'+ico(S.oos==='backlog'?'backlog':S.oos==='reports'?'report':S.oos==='settings'?'gear':'assess',20)+'</span><div><h2>'+o[0]+'</h2><p>Planned for '+o[2]+'</p></div></div>'+
+    '<p style="max-width:70ch;margin-bottom:12px">This area is outside the MVP. It is planned for '+o[2]+': '+o[1]+'.</p><p class="muted" style="max-width:70ch;margin-bottom:14px">The MVP validates one thing first: the single-opportunity qualification loop with human review.</p>'+
+    '<button class="btn pri" data-act="nav" data-p="flow">Go to New Opportunity '+ico('arrow',16)+'</button></section>';
+}
+function kv(a,b){return '<tr><th>'+a+'</th><td>'+b+'</td></tr>';}
+function pageRecord(){
+  var r=S.cur;
+  var intake='<table class="kvt">'+r.intake.map(function(x){return kv(esc(x[0]),esc(x[1])+(x[2]?' <span class="tag t-E">sample retained</span>':''));}).join('')+'</table>';
+  var interp='<table class="kvt">'+r.interp.map(function(x){return kv(esc(x.label)+' <span class="tag t-'+x.badge+'">'+TAG[x.badge]+'</span>',esc(x.value));}).join('')+kv('Key terms',esc(r.terms.join(', ')||'None'))+'</table>';
+  var clar='<table class="kvt">'+r.clar.map(function(x){return kv(esc(x.q),esc(x.a)+(x.sample?' <span class="tag t-E">sample retained</span>':''));}).join('')+'</table>';
+  var ass='<table class="kvt three"><thead><tr><th>Dimension</th><th>AI rating</th><th>Final rating</th></tr></thead><tbody>'+DIMS.map(function(d){var fl=r.finalLv[d.k],al=r.aiLv[d.k];return '<tr><td>'+d.name+'</td><td>'+al+'</td><td>'+fl+(fl!==al?' <span class="tag t-E">modified</span>':'')+'</td></tr>';}).join('')+'</tbody></table>';
+  var gl='<ul class="gates">'+r.gates.map(function(g){return '<li><span class="g-'+g.s+'">'+ico(g.s==='ok'?'check':g.s==='flag'?'warn':'info',16)+'</span><span>'+esc(g.t)+'</span></li>';}).join('')+'</ul>';
+  var trail='<ol class="trail">'+r.trail.map(function(t){return '<li>'+esc(t[0])+' · '+esc(t[1])+'</li>';}).join('')+'</ol>';
+  return '<section class="panel"><div class="ph"><span class="num">'+ico('check',20)+'</span><div><h2>Human Decision Record</h2><p>'+esc(r.id)+' · '+esc(r.time)+'</p></div></div>'+
+    '<table class="kvt">'+kv('Opportunity',esc(r.title))+kv('Scenario',esc(r.scenario))+kv('Entry path',esc(r.path))+kv('Reviewer','Transformation Analyst (demo user)')+kv('AI recommended',esc(r.aiInterv))+kv('Final intervention',esc(r.finalInterv)+(r.finalInterv!==r.aiInterv?' <span class="tag t-E">modified</span>':''))+kv('Decision','<b>'+esc(DECS[r.decision])+'</b>')+kv('Final outcome','<b>'+esc(r.outcome)+'</b>')+kv('Rationale',esc(r.rationale||'None recorded'))+kv('Information gaps carried forward',String(r.gaps))+'</table>'+
+    '<h3 class="rec-h">Assessment</h3>'+ass+'<h3 class="rec-h">Governance checks</h3>'+gl+'<h3 class="rec-h">Submitted values</h3>'+intake+'<h3 class="rec-h">Interpretation as confirmed</h3>'+interp+'<h3 class="rec-h">Clarifications</h3>'+clar+'<h3 class="rec-h">Decision trail</h3>'+trail+
+    '<div class="foot"><button class="btn" data-act="nav" data-p="opps">View My Opportunities</button><button class="btn pri" data-act="newopp">Start another opportunity '+ico('arrow',16)+'</button></div>'+
+    '<p class="disc">Synthetic demonstrator record. It is not stored anywhere beyond this browser session and does not commit any investment.</p></section>';
+}
+
+/* ---------- Render ---------- */
+var NAV=[['home','home','Home'],['flow','plus','New Opportunity'],['opps','folder','My Opportunities'],['oos:assess','assess','Assessments'],['oos:backlog','backlog','Backlog'],['oos:reports','report','Reports'],['oos:settings','gear','Settings']];
+function render(){
+  var active=S.page==='oos'?'oos:'+S.oos:(S.page==='record'?'opps':S.page);
+  $('#side').innerHTML='<div class="brand">IdeaHub <b>AI</b></div>'+NAV.map(function(n){
+    var soon=n[0].indexOf('oos:')===0;
+    return '<button class="nav'+(active===n[0]?' on':'')+'" data-act="nav" data-p="'+n[0]+'"'+(soon?' title="Outside the MVP"':'')+'>'+ico(n[1],18)+'<span>'+n[2]+'</span>'+(soon?'<span class="soon">later</span>':'')+'</button>';
+  }).join('');
+  var html={home:pageHome,flow:pageFlow,opps:pageOpps,oos:pageOos,record:pageRecord}[S.page]();
+  $('#view').innerHTML=html;
+}
+function go(step){S.step=step;render();window.scrollTo({top:0});}
+function showMsg(m){var e=$('#msg');if(e)e.textContent=m;}
+
+/* ---------- Actions ---------- */
+function requiredMissing(){
+  var miss=[];
+  FIELDS[scn().path].forEach(function(f){
+    if(!f.req)return;var v=(S.vals[f.k]||'').trim();
+    if(!v||(f.type==='select'&&v.indexOf('Select')===0))miss.push(f.label);
+  });
+  return miss;
+}
+function next(){
+  var s=S.step,sc=scn();
+  if(s===0){
+    var miss=requiredMissing();
+    if(miss.length){showMsg('Please complete: '+miss.join(', ')+'.');return;}
+    var sig=JSON.stringify(S.vals);
+    if(sig!==S.interpSig){S.interp=buildInterp();S.interpSig=sig;S.terms=sc.terms.map(function(t){return {t:t,on:true};});S.editing=null;}
+    logEv('1','Opportunity submitted via '+pathLabel(sc.path)+' path');
+  }
+  if(s===1){
+    if(S.editing){S.editing=null;}
+    var edits=S.interp.filter(function(r){return r.badge==='E';}).length,off=S.terms.filter(function(t){return !t.on;}).length;
+    logEv('2','Interpretation confirmed ('+edits+' edited field'+(edits===1?'':'s')+', '+off+' term'+(off===1?'':'s')+' removed)');
+  }
+  if(s===2){
+    var bad=[];
+    S.clar.forEach(function(c,i){
+      if(c.unknown||c.gap)return;var q=sc.clar[i],v=(c.val||'').trim();
+      if(!v||(q.type==='select'&&v.indexOf('Select')===0))bad.push(i+1);
+    });
+    if(bad.length){showMsg('Answer, mark unknown or continue with the gap for question '+bad.join(', ')+'.');return;}
+    var u=S.clar.filter(function(c){return c.unknown;}).length,g=S.clar.filter(function(c){return c.gap&&!c.unknown;}).length;
+    logEv('3','Clarifications recorded ('+(S.clar.length-u-g)+' answered, '+u+' unknown, '+g+' gap accepted)');
+  }
+  if(s===3)logEv('4','Assessment reviewed (value '+sc.assess.value.level+', feasibility '+sc.assess.feas.level+', risk '+sc.assess.risk.level+', evidence '+sc.assess.evid.level+')');
+  if(s===4)logEv('5','Recommendation reviewed: '+sc.rec.name);
+  go(s+1);
+}
+function setScenario(id,msg){resetFlow(id);S.page='flow';render();toast(msg||'Scenario loaded. Sample values are pre-filled.');}
+function submitDecision(){
+  if(submitProblems().length)return;
+  var sc=scn(),d=S.dec,gt=gates(),fl=finalLevels(),ai={};
+  DIMS.forEach(function(x){ai[x.k]=sc.assess[x.k].level;});
+  logEv('6','Decision: '+DECS[d.type]+' · outcome '+d.outcome);
+  var n=S.records.length+1,now=new Date();
+  var intake=FIELDS[sc.path].map(function(f){return [f.label,S.vals[f.k]||'Not provided',!S.touched[f.k]&&S.vals[f.k]===sc.sample[f.k]];});
+  var rec={id:'IH-'+sc.id+'-'+String(n).padStart(3,'0'),time:now.toLocaleString(),title:gi('title'),scenario:sc.label,path:pathLabel(sc.path),
+    aiInterv:sc.rec.name,finalInterv:d.type==='modify'?d.interv:sc.rec.name,decision:d.type,outcome:d.outcome,rationale:d.rationale.trim(),gaps:openGaps(),
+    aiLv:ai,finalLv:fl,gates:gt,intake:intake,interp:S.interp.map(function(r){return {label:r.label,value:r.value,badge:r.badge};}),
+    terms:S.terms.filter(function(t){return t.on;}).map(function(t){return t.t;}),
+    clar:sc.clar.map(function(q,i){var c=S.clar[i],st=clarStatus(i);return {q:q.q,a:st==='answered'?c.val:(st==='unknown'?'Recorded as unknown':'Continued with this gap'),sample:st==='answered'&&!c.touched&&c.val===q.sample};}),
+    trail:Object.keys(S.trail).sort().map(function(k){return [tm(S.trail[k].t),S.trail[k].text];})};
+  S.records.push(rec);S.cur=rec;S.page='record';render();window.scrollTo({top:0});
+}
+function refreshSubmit(){
+  var p=submitProblems(),b=$('#submitBtn'),h=$('#subHint');
+  if(b)b.disabled=p.length>0;
+  if(h)h.textContent=p.length?'To submit: '+p.join(', ')+'.':'';
+}
+
+/* ---------- Events ---------- */
+document.addEventListener('click',function(e){
+  var b=e.target.closest('[data-act]');if(!b)return;
+  var a=b.dataset.act;
+  if(a==='nav'){
+    var p=b.dataset.p;
+    if(p.indexOf('oos:')===0){S.page='oos';S.oos=p.slice(4);}else S.page=p;
+    render();window.scrollTo({top:0});
+  }
+  else if(a==='tab'){var t=b.dataset.t;if(t!==scn().path)setScenario(t==='pm'?'D':'A','Switched to the sample scenario for this entry path.');}
+  else if(a==='reset'){resetFlow(S.sid);render();toast('Sample values restored.');}
+  else if(a==='next')next();
+  else if(a==='back')go(Math.max(0,S.step-1));
+  else if(a==='step')go(+b.dataset.i);
+  else if(a==='edit'){var r=S.interp.filter(function(x){return x.k===b.dataset.k;})[0];S.editing=r.k;S.editBuf=r.value;render();}
+  else if(a==='save'){var r2=S.interp.filter(function(x){return x.k===S.editing;})[0];var v=(S.editBuf||'').trim();if(v){r2.value=v;r2.badge='E';r2.note='';}S.editing=null;render();}
+  else if(a==='cancelEdit'){S.editing=null;render();}
+  else if(a==='term'){var tt=S.terms[+b.dataset.i];tt.on=!tt.on;render();}
+  else if(a==='addterm'){var inp=$('#newTerm'),val=inp.value.trim();if(val&&!S.terms.some(function(x){return x.t.toLowerCase()===val.toLowerCase();})){S.terms.push({t:val,on:true});render();}}
+  else if(a==='dim'){S.open[b.dataset.d]=!S.open[b.dataset.d];render();}
+  else if(a==='dec'){
+    S.dec.type=b.dataset.t;
+    if(S.dec.type!=='modify'){S.dec.levels={};S.dec.interv='';}
+    if(S.dec.type==='reject')S.dec.outcome='Reject';
+    else if(S.dec.type==='request')S.dec.outcome='Refine';
+    else if(!outcomeState(S.dec.outcome).ok)S.dec.outcome='';
+    render();
+  }
+  else if(a==='submit')submitDecision();
+  else if(a==='newopp'){resetFlow(S.sid);S.page='flow';render();window.scrollTo({top:0});}
+  else if(a==='openrec'){S.cur=S.records[+b.dataset.i];S.page='record';render();window.scrollTo({top:0});}
+  else if(a==='upload')$('#fileIn').click();
+});
+document.addEventListener('keydown',function(e){
+  if((e.key==='Enter'||e.key===' ')&&e.target.matches('.drop')){e.preventDefault();$('#fileIn').click();}
+  if(e.key==='Enter'&&e.target.id==='newTerm'){e.preventDefault();var b=document.querySelector('[data-act="addterm"]');if(b)b.click();}
+});
+document.addEventListener('input',function(e){
+  var t=e.target;
+  if(t.dataset.k!==undefined&&S.page==='flow'){S.vals[t.dataset.k]=t.value;S.touched[t.dataset.k]=true;t.classList.remove('sample');}
+  else if(t.dataset.ci!==undefined&&t.dataset.w===undefined){var c=S.clar[+t.dataset.ci];c.val=t.value;c.touched=true;t.classList.remove('sample');}
+  else if(t.dataset.rat!==undefined){S.dec.rationale=t.value;refreshSubmit();}
+  else if(t.dataset.ik!==undefined){S.editBuf=t.value;}
+});
+document.addEventListener('change',function(e){
+  var t=e.target;
+  if(t.dataset.sc!==undefined){setScenario(t.value);}
+  else if(t.dataset.w!==undefined){var c=S.clar[+t.dataset.ci];c[t.dataset.w]=t.checked;render();}
+  else if(t.dataset.outc!==undefined){S.dec.outcome=t.value;refreshSubmit();}
+  else if(t.dataset.mi!==undefined){S.dec.interv=t.value;refreshSubmit();}
+  else if(t.dataset.ml!==undefined){S.dec.levels[t.dataset.ml]=t.value;if(!outcomeState(S.dec.outcome).ok)S.dec.outcome='';render();}
+  else if(t.id==='fileIn'){S.files=Array.prototype.slice.call(t.files).map(function(f){return {name:f.name,size:f.size};});render();}
+});
+document.addEventListener('dragover',function(e){var d=e.target.closest('.drop');if(d){e.preventDefault();d.classList.add('over');}});
+document.addEventListener('dragleave',function(e){var d=e.target.closest('.drop');if(d)d.classList.remove('over');});
+document.addEventListener('drop',function(e){
+  var d=e.target.closest('.drop');if(!d)return;e.preventDefault();
+  S.files=Array.prototype.slice.call(e.dataTransfer.files).map(function(f){return {name:f.name,size:f.size};});render();
+});
+
+render();
+})();
+</script>
+</body>
+</html>
